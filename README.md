@@ -58,7 +58,10 @@ Este é um projeto de estudo para desenvolver uma versão digital mobile do jogo
 ```plaintext
 /Assets
   /Scripts         # Scripts de lógica do jogo
-  /Resources       # Assets do jogo (imagens, sons, etc.)
+  /Resources       # Assets do jogo (Textos, assets externos que foram importados.)
   /Scenes          # Cenas do jogo (Menu, Jogo, Lobby)
   /Plugins         # Bibliotecas externas, incluindo Photon e SQLite
+  /Sounds	   # Sons de trilha sonora, efeitos sonoros.
+  /Images	   # Sprites, elementos visuais da interface e animações.
+  /Prefabs     	   # Objetos prontos para uso universal nas cenas.
 ```
