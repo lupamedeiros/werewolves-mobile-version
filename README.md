@@ -1,5 +1,7 @@
 # Werewolves of Millers Hollow - Mobile Version
 
+Link com as regras do jogo: https://cdn.svc.asmodee.net/production-asmodeeca/uploads/2023/07/WerewolvesThePact_EN_Rules.pdf
+
 ## ⚠️ Aviso Importante
 
 **Este projeto é destinado apenas para fins educacionais.**
