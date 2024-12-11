@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.XR;
 
 namespace Game.Menu
 {
@@ -12,7 +11,7 @@ namespace Game.Menu
         [Header("Connect Settings")]
         [SerializeField] ConnectToServer m_multiplayerLogic;
 
-        [SerializeField] TMPro.TMP_InputField m_nicknameInputField;
+        [SerializeField] InputField m_nicknameInputField;
         [Header("Connect Button Settings")]
         [SerializeField] Button m_connectToLobbyButton;
         [SerializeField] TMPro.TextMeshProUGUI m_connectToLobbyButtonText;
@@ -44,6 +43,7 @@ namespace Game.Menu
 
         void Connect()
         {
+            if (!m_nicknameInputField) return;
             SetFailedMessage();
             UpdateConnectButtonText("Connecting...");
             string nickname = m_nicknameInputField.text;
