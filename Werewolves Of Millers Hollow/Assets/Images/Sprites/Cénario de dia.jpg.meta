@@ -113,10 +113,10 @@ TextureImporter:
       name: "C\xE9nario de dia_0"
       rect:
         serializedVersion: 2
-        x: 145
-        y: 29
-        width: 524
-        height: 1074
+        x: 146
+        y: 31
+        width: 522
+        height: 1073
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,8 +124,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 51daa48392fc5f74aa53eef3b5f78ccd
-      internalID: -1803329007
+      spriteID: 8783f71c75d80744b9bb8e2f3ede0d0c
+      internalID: 994381531
       vertices: []
       indices: 
       edges: []
@@ -141,7 +141,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      "C\xE9nario de dia_0": -1803329007
+      "C\xE9nario de dia_0": 994381531
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
