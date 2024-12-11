@@ -114,9 +114,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 145
-        y: 16
-        width: 524
-        height: 1076
+        y: 33
+        width: 512
+        height: 1057
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,8 +124,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8e271cd74514ac14cbaa928b00f73276
-      internalID: -1951599600
+      spriteID: 597e12dd15e4674448e83af8712a2d47
+      internalID: 2110418659
       vertices: []
       indices: 
       edges: []
@@ -141,7 +141,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      "C\xE9nario de noite_0": -1951599600
+      "C\xE9nario de noite_0": 2110418659
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
