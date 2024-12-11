@@ -33,9 +33,12 @@ public class Mudanca_dia_noite : MonoBehaviour
     {
         while (true)
         {
-
+            yield return new WaitForSeconds(tempoInicialSegundos);
+            
             yield return StartCoroutine(AlterarImagemPorTempo(backgroundDia, backgroundNoite));
 
+            yield return new WaitForSeconds(tempoInicialSegundos);
+            
             yield return StartCoroutine(AlterarImagemPorTempo(backgroundNoite, backgroundDia));
         }
     }
