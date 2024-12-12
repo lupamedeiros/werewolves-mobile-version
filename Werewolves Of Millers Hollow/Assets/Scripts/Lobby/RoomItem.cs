@@ -10,9 +10,11 @@ namespace Game.Lobby
         [SerializeField] UnityEngine.UI.Button m_button;
         string m_roomName;
         [SerializeField] TMPro.TextMeshProUGUI m_roomNameText;
+        bool m_enteringRoom = false;
 
         private void OnEnable()
         {
+            m_enteringRoom = false;
             m_button.onClick.AddListener(JoinRoom);
         }
 
@@ -29,6 +31,10 @@ namespace Game.Lobby
 
         void JoinRoom()
         {
+            if (m_enteringRoom) return;
+            m_enteringRoom = true;
+
+            MultiplayerObserver.EnteringRoom();
             PhotonNetwork.JoinRoom(m_roomName);
         }
     }

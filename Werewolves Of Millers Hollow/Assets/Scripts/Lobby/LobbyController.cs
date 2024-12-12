@@ -18,6 +18,7 @@ namespace Game.Lobby
         [SerializeField] GameObject m_enterRoomCanvas;
 
         [SerializeField] GameObject m_defaultCanvas;
+        bool m_canSwitchCanvas;
 
         [Header("Lobby Components")]
         [SerializeField] RoomEnter m_enterTab;
@@ -31,9 +32,22 @@ namespace Game.Lobby
                 PhotonNetwork.ConnectUsingSettings();
             }
 #endif
-
+            EnableSwitchCanvas();
             EnableCanvas(m_defaultCanvas);
             PhotonNetwork.JoinLobby();
+        }
+
+        public override void OnEnable()
+        {
+            base.OnEnable();
+            MultiplayerObserver.OnEnteringRoom += DisableSwitchCanvas;
+        }
+
+        public override void OnDisable()
+        {
+            base.OnDisable();
+            MultiplayerObserver.OnEnteringRoom -= DisableSwitchCanvas;
+
         }
 
         public void EnableLobby() => EnableCanvas(m_lobbyCanvas);
@@ -42,14 +56,26 @@ namespace Game.Lobby
 
         void EnableCanvas(GameObject canvas)
         {
+            if (!m_canSwitchCanvas) return;
             m_lobbyCanvas.SetActive(m_lobbyCanvas == canvas);
             m_createRoomCanvas.SetActive(m_createRoomCanvas == canvas);
             m_enterRoomCanvas.SetActive(m_enterRoomCanvas == canvas);
         }
 
+        void EnableSwitchCanvas()
+        {
+            m_canSwitchCanvas = true;
+        }
+
+        void DisableSwitchCanvas()
+        {
+            m_canSwitchCanvas = false;
+        }
+
         public override void OnJoinedRoom()
         {
-            Debug.Log("ENTROU NA SALA PORRA");
+            Debug.Log("Entrou na sala!");
+            GameSceneManager.Instance.LoadGameHubScene();
         }
 
         public override void OnRoomListUpdate(List<RoomInfo> roomList)

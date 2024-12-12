@@ -25,6 +25,8 @@ namespace Game.Lobby
         [SerializeField, Min(1)] int m_maxPlayerCount = 1;
         int m_currentMaxPlayerCount;
 
+        bool m_creatingRoom;
+
         public void OnEnable()
         {
             ResetCreator();
@@ -32,6 +34,7 @@ namespace Game.Lobby
 
         void ResetCreator()
         {
+            m_creatingRoom = false;
             m_roomNameInputField.text = m_defaultRoomName;
             m_currentMinPlayerCount = m_defaultMinPlayerCount;
             m_currentMaxPlayerCount = m_defaultMaxPlayerCount;
@@ -74,9 +77,12 @@ namespace Game.Lobby
 
         public void CreateRoom()
         {
+            if (m_creatingRoom) return;
             string roomName = m_roomNameInputField.text;
             if (string.IsNullOrWhiteSpace(roomName)) return;
 
+            MultiplayerObserver.EnteringRoom();
+            m_creatingRoom = true;
             RoomOptions roomOptions = new RoomOptions();
             roomOptions.MaxPlayers = m_currentMaxPlayerCount;
             PhotonNetwork.CreateRoom(roomName, roomOptions);

@@ -10,6 +10,7 @@ namespace Game
         [Header("Scenes Index")]
         [SerializeField, Min(-1)] int m_menuSceneIndex;
         [SerializeField, Min(-1)] int m_lobbySceneIndex;
+        [SerializeField, Min(-1)] int m_gameHubIndex;
 
         public void LoadMenuScene()
         {
@@ -19,6 +20,11 @@ namespace Game
         public void LoadLobbyScene()
         {
             LoadScene(m_lobbySceneIndex);
+        }
+
+        public void LoadGameHubScene()
+        {
+            LoadScene(m_gameHubIndex);
         }
 
         void LoadScene(int index)
