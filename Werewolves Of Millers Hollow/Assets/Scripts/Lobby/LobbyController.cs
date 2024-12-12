@@ -1,11 +1,17 @@
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Lobby
 {
-    public class LobbyController : MonoBehaviour
+    public class LobbyController : MonoBehaviourPunCallbacks
     {
+        [Header("Editor Only")]
+        [SerializeField] bool m_setOnAwake = true;
+        
+
         [Header("Canvas")]
         [SerializeField] GameObject m_lobbyCanvas;
         [SerializeField] GameObject m_createRoomCanvas;
@@ -13,9 +19,21 @@ namespace Game.Lobby
 
         [SerializeField] GameObject m_defaultCanvas;
 
-        private void OnEnable()
+        [Header("Lobby Components")]
+        [SerializeField] RoomEnter m_enterTab;
+
+        private void Awake()
         {
+#if UNITY_EDITOR
+            if (m_setOnAwake)
+            {
+                PhotonNetwork.NickName = "Dev Testing";
+                PhotonNetwork.ConnectUsingSettings();
+            }
+#endif
+
             EnableCanvas(m_defaultCanvas);
+            PhotonNetwork.JoinLobby();
         }
 
         public void EnableLobby() => EnableCanvas(m_lobbyCanvas);
@@ -27,6 +45,16 @@ namespace Game.Lobby
             m_lobbyCanvas.SetActive(m_lobbyCanvas == canvas);
             m_createRoomCanvas.SetActive(m_createRoomCanvas == canvas);
             m_enterRoomCanvas.SetActive(m_enterRoomCanvas == canvas);
+        }
+
+        public override void OnJoinedRoom()
+        {
+            Debug.Log("ENTROU NA SALA PORRA");
+        }
+
+        public override void OnRoomListUpdate(List<RoomInfo> roomList)
+        {
+            m_enterTab.UpdateRoomList(roomList);
         }
     }
 }

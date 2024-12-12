@@ -25,7 +25,7 @@ namespace Game.Lobby
         [SerializeField, Min(1)] int m_maxPlayerCount = 1;
         int m_currentMaxPlayerCount;
 
-        private void OnEnable()
+        public void OnEnable()
         {
             ResetCreator();
         }
@@ -79,7 +79,6 @@ namespace Game.Lobby
 
             RoomOptions roomOptions = new RoomOptions();
             roomOptions.MaxPlayers = m_currentMaxPlayerCount;
-            roomOptions.CustomRoomProperties.Add("m", 1);
             PhotonNetwork.CreateRoom(roomName, roomOptions);
         }
     }
