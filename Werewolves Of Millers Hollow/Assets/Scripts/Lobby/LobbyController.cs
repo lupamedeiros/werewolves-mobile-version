@@ -15,12 +15,6 @@ namespace Game.Lobby
         [SerializeField] GameObject m_defaultCanvas;
         bool m_canSwitchCanvas;
 
-        [Header("Lobby Components")]
-        [SerializeField] RoomEnter m_enterTab;
-        [SerializeField, Min(0)] float m_secondsToRefresh;
-        float m_refreshTime;
-        List<RoomInfo> m_currentRoomList = new();
-
         private void Awake()
         {
 #if UNITY_EDITOR
@@ -44,13 +38,7 @@ namespace Game.Lobby
             MultiplayerObserver.OnEnteringRoom -= DisableSwitchCanvas;
 
         }
-        private void Update()
-        {
-            if (Time.time >= m_refreshTime)
-            {
-                UpdateRoomList();
-            }
-        }
+        
 
         public void EnableLobby() => EnableCanvas(m_lobbyCanvas);
         public void EnableCreateRoom() => EnableCanvas(m_createRoomCanvas);
@@ -71,12 +59,11 @@ namespace Game.Lobby
             m_canSwitchCanvas = false;
         }
 
-        
-        public void UpdateRoomList()
+        public override void OnJoinedRoom()
         {
-            m_currentRoomList ??= new();
-            m_enterTab.UpdateRoomList(m_currentRoomList);
-            m_refreshTime = Time.time + m_secondsToRefresh;
+            base.OnJoinedRoom();
+            Debug.Log("Entrou na sala!");
+            GameSceneManager.GetInstance(false).LoadGameHubScene();
         }
 
         public override void OnConnectedToMaster()
@@ -84,15 +71,10 @@ namespace Game.Lobby
             PhotonNetwork.JoinLobby();
         }
 
-        public override void OnJoinedRoom()
+        public override void OnJoinRoomFailed(short returnCode, string message)
         {
-            Debug.Log("Entrou na sala!");
-            GameSceneManager.GetInstance(false).LoadGameHubScene();
-        }
-
-        public override void OnRoomListUpdate(List<RoomInfo> roomList)
-        {
-            m_currentRoomList = roomList;
+            base.OnJoinRoomFailed(returnCode, message);
+            EnableSwitchCanvas();
         }
     }
 }

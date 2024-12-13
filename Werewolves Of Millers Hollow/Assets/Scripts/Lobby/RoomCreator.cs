@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Game.Lobby
 {
-    public class RoomCreator : MonoBehaviour
+    public class RoomCreator : MonoBehaviourPunCallbacks
     {
         [Header("Room Name")]
         [SerializeField] string m_defaultRoomName;
@@ -25,11 +25,35 @@ namespace Game.Lobby
         [SerializeField, Min(1)] int m_maxPlayerCount = 1;
         int m_currentMaxPlayerCount;
 
+        [Header("Create room button")]
+        [SerializeField] Button m_createRoomButton;
         bool m_creatingRoom;
 
-        public void OnEnable()
+        public override void OnEnable()
         {
+            base.OnEnable();
+            m_createRoomButton.onClick.AddListener(CreateRoom);
             ResetCreator();
+        }
+
+        public override void OnDisable()
+        {
+            base.OnDisable();
+            m_createRoomButton.onClick.RemoveListener(CreateRoom);
+            ResetCreator();
+        }
+
+        private void Update()
+        {
+            m_createRoomButton.gameObject.SetActive(CanCreateRoom());
+        }
+
+        bool CanCreateRoom()
+        {
+            if (string.IsNullOrWhiteSpace(m_roomNameInputField.text)) return false;
+            if (PhotonNetwork.Server != ServerConnection.MasterServer) return false;
+            if (!PhotonNetwork.InLobby) return false;
+            return true;
         }
 
         void ResetCreator()
@@ -80,12 +104,30 @@ namespace Game.Lobby
             if (m_creatingRoom) return;
             string roomName = m_roomNameInputField.text;
             if (string.IsNullOrWhiteSpace(roomName)) return;
-
+            Debug.Log("Criando sala!");
             MultiplayerObserver.EnteringRoom();
             m_creatingRoom = true;
             RoomOptions roomOptions = new RoomOptions();
             roomOptions.MaxPlayers = m_currentMaxPlayerCount;
             PhotonNetwork.CreateRoom(roomName, roomOptions);
+        }
+
+        public override void OnCreatedRoom()
+        {
+            base.OnCreatedRoom();
+            Debug.Log("Sala criada!");
+        }
+
+        public override void OnCreateRoomFailed(short returnCode, string message)
+        {
+            base.OnCreateRoomFailed(returnCode, message);
+            m_creatingRoom = false;
+        }
+
+        public override void OnJoinRoomFailed(short returnCode, string message)
+        {
+            base.OnJoinRoomFailed(returnCode, message);
+            m_creatingRoom = false;
         }
     }
 }

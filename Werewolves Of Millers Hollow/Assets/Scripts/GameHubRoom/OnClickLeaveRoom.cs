@@ -26,14 +26,14 @@ namespace Game.GameRoom
         void OnClickLeave()
         {
             if (m_leaving) return;
-            Debug.Log("SAINDO");
+            Debug.Log("Saindo...");
             m_leaving = true;
             PhotonNetwork.LeaveRoom();
         }
 
         public override void OnLeftRoom()
         {
-            Debug.Log("SAIU");
+            Debug.Log("Saiu da sala!");
             GameSceneManager.GetInstance(false)?.LoadLobbyScene();
         }
     }
