@@ -29,24 +29,24 @@ namespace Game.Lobby
         public override void OnEnable()
         {
             base.OnEnable();
-            m_refreshButton.onClick.AddListener(UpdateRoomList);
+            m_refreshButton.onClick.AddListener(UpdateRoomVisual);
         }
 
         public override void OnDisable()
         {
             base.OnDisable();
-            m_refreshButton.onClick.RemoveListener(UpdateRoomList);
+            m_refreshButton.onClick.RemoveListener(UpdateRoomVisual);
         }
 
         private void Update()
         {
             if (Time.time >= m_refreshTime)
             {
-                UpdateRoomList();
+                UpdateRoomVisual();
             }
         }
 
-        void UpdateRoomListVisual(List<RoomInfo> roomList)
+        void CreateRoomButtons(List<RoomInfo> roomList)
         {
             foreach (RoomItem room in m_roomItems)
             {
@@ -68,11 +68,11 @@ namespace Game.Lobby
             Debug.Log("Visualização de salas atualizada!");
         }
 
-        void UpdateRoomList()
+        public void UpdateRoomVisual()
         {
             Debug.Log("Atualizando visualização de salas!");
             m_currentRoomList ??= new();
-            UpdateRoomListVisual(m_currentRoomList);
+            CreateRoomButtons(m_currentRoomList);
             m_refreshTime = Time.time + m_secondsToRefresh;
         }
 
