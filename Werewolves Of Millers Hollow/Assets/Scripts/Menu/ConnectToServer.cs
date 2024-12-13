@@ -27,8 +27,8 @@ namespace Game.Multiplayer
 
         public override void OnConnectedToMaster()
         {
-            GameSceneManager.Instance.LoadLobbyScene();
-            MultiplayerObserver.ConnectToLobby();
+            GameSceneManager.GetInstance(false).LoadLobbyScene();
+            MultiplayerObserver.ConnectToMaster();
         }
     }
 }
