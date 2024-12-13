@@ -56,6 +56,10 @@ namespace Game.Lobby
 
             foreach (RoomInfo room in roomList)
             {
+                if (!room.IsVisible) continue;
+                if (!room.IsOpen) continue;
+                if (room.PlayerCount == room.MaxPlayers) continue;
+
                 RoomItem newRoom = Instantiate(m_roomItemPrefab, m_contentObject);
                 newRoom.SetRoomName(room.Name);
                 m_roomItems.Add(newRoom);
@@ -81,6 +85,12 @@ namespace Game.Lobby
             //base.OnRoomListUpdate(roomList);
             Debug.Log("Lista de salas ataualizada!");
             m_currentRoomList = roomList;
+        }
+
+        public override void OnJoinRoomFailed(short returnCode, string message)
+        {
+            base.OnJoinRoomFailed(returnCode, message);
+            UpdateRoomVisual();
         }
     }
 }

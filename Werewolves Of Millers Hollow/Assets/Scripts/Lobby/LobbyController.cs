@@ -25,7 +25,11 @@ namespace Game.Lobby
                 PhotonNetwork.ConnectUsingSettings();
             }
 #endif
-            PhotonNetwork.JoinLobby();
+
+            if (PhotonNetwork.NetworkClientState == ClientState.ConnectedToMasterServer)
+            {
+                PhotonNetwork.JoinLobby();
+            }
             EnableSwitchCanvas();
             EnableCanvas(m_defaultCanvas);      
         }
@@ -66,6 +70,7 @@ namespace Game.Lobby
             Debug.Log("Entrou na sala!");
             GameSceneManager.GetInstance(false).LoadGameHubScene();
         }
+
 
         public override void OnConnectedToMaster()
         {
