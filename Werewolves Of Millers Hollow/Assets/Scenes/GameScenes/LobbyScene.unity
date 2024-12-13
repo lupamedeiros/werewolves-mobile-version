@@ -3202,12 +3202,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48d6ed1dd6650e4428b14084476fc0f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_setOnAwake: 0
   m_lobbyCanvas: {fileID: 3776268956205961066}
   m_createRoomCanvas: {fileID: 1810006254}
   m_enterRoomCanvas: {fileID: 354258792}
   m_defaultCanvas: {fileID: 3776268956205961066}
   m_enterTab: {fileID: 1316623639}
+  m_secondsToRefresh: 2
 --- !u!114 &1316623639
 MonoBehaviour:
   m_ObjectHideFlags: 0
