@@ -62,6 +62,7 @@ namespace Game.GameRoom
         {
             TMPro.TextMeshProUGUI newPlayer = Instantiate(m_textPrefab, m_content);
             newPlayer.text = playerNickname;
+            m_currentPlayerList.Add(newPlayer.gameObject);
         }
 
         void SetContentHeight()
