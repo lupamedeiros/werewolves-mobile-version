@@ -1,5 +1,6 @@
 using Photon.Pun;
 using Photon.Realtime;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,6 +25,7 @@ namespace Game.Lobby
                 PhotonNetwork.ConnectUsingSettings();
             }
 #endif
+            PhotonNetwork.JoinLobby();
             EnableSwitchCanvas();
             EnableCanvas(m_defaultCanvas);      
         }
@@ -36,7 +38,6 @@ namespace Game.Lobby
         {
             base.OnDisable();
             MultiplayerObserver.OnEnteringRoom -= DisableSwitchCanvas;
-
         }
         
 
@@ -68,7 +69,15 @@ namespace Game.Lobby
 
         public override void OnConnectedToMaster()
         {
+            base.OnConnectedToMaster();
+            Debug.Log("Conectou ao master!");
             PhotonNetwork.JoinLobby();
+        }
+
+        public override void OnJoinedLobby()
+        {
+            base.OnJoinedLobby();
+            Debug.Log("Entrou no lobby");
         }
 
         public override void OnJoinRoomFailed(short returnCode, string message)

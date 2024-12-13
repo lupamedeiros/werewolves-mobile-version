@@ -52,7 +52,7 @@ namespace Game.Lobby
         {
             if (string.IsNullOrWhiteSpace(m_roomNameInputField.text)) return false;
             if (PhotonNetwork.Server != ServerConnection.MasterServer) return false;
-            if (!PhotonNetwork.InLobby) return false;
+            //if (!PhotonNetwork.InLobby) return false;
             return true;
         }
 

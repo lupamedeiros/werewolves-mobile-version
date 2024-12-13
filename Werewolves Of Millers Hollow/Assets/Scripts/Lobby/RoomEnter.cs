@@ -64,7 +64,7 @@ namespace Game.Lobby
 
             float x = m_contentObject.sizeDelta.x;
             float y = m_yButtonSize * m_roomItems.Count;
-            m_contentObject.sizeDelta = new Vector2(x, y);
+            m_contentObject.sizeDelta.Set(x, y);
             Debug.Log("Visualização de salas atualizada!");
         }
 
@@ -78,7 +78,7 @@ namespace Game.Lobby
 
         public override void OnRoomListUpdate(List<RoomInfo> roomList)
         {
-            base.OnRoomListUpdate(roomList);
+            //base.OnRoomListUpdate(roomList);
             Debug.Log("Lista de salas ataualizada!");
             m_currentRoomList = roomList;
         }
