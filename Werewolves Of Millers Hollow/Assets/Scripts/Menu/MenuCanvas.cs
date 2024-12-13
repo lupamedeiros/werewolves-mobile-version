@@ -56,7 +56,7 @@ namespace Game.Menu
             if (m_connecting) return;
             m_connecting = true;
             ClearErrorMessage();
-            UpdateConnectButtonText("Connecting...");
+            UpdateConnectButtonText("Entrando...");
             string nickname = m_nicknameInputField.text;
             m_multiplayerLogic.ConnectWithNickname(nickname);
         }

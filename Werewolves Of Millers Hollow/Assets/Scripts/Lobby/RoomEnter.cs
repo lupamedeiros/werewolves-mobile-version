@@ -12,14 +12,17 @@ namespace Game.Lobby
         [Header("UI Settings")]
         [SerializeField] RoomItem m_roomItemPrefab;
         [SerializeField] float m_yButtonSize;
+        [SerializeField] InputField m_roomCodeInputField;
         List<RoomItem> m_roomItems = new();
         [SerializeField] RectTransform m_contentObject;
         [SerializeField] Button m_refreshButton;
+        [SerializeField] Button m_enterRoomByCodeButton;
 
         [Header("Connection Settings")]
         [SerializeField, Min(0)] float m_secondsToRefresh;
         float m_refreshTime;
         List<RoomInfo> m_currentRoomList = new();
+        bool m_enteringRoom;
 
         private void Awake()
         {
@@ -44,7 +47,32 @@ namespace Game.Lobby
             {
                 UpdateRoomVisual();
             }
+
+            m_enterRoomByCodeButton.gameObject.SetActive(CanEnterRoom());
         }
+
+        void EnterRoomByCode()
+        {
+            if (!CanEnterRoom()) return;
+            m_enteringRoom = true;
+            Debug.Log($"Entrando na sala: {GetInputFieldRoomName()}!");
+            MultiplayerObserver.EnteringRoom();
+            PhotonNetwork.JoinRoom(GetInputFieldRoomName());
+        }
+
+        bool CanEnterRoom()
+        {
+            if (string.IsNullOrWhiteSpace(GetInputFieldRoomName())) return false;
+            if (m_enteringRoom) return false;
+            RoomInfo room = m_currentRoomList.Find(x => x.Name == GetInputFieldRoomName());
+            if (room == null) return false;
+            if (!room.IsVisible) return false;
+            if (!room.IsOpen) return false;
+            if (room.PlayerCount >= room.MaxPlayers) return false;
+            return true;
+        }
+
+        string GetInputFieldRoomName() => m_roomCodeInputField.text;
 
         void CreateRoomButtons(List<RoomInfo> roomList)
         {
@@ -90,6 +118,7 @@ namespace Game.Lobby
         public override void OnJoinRoomFailed(short returnCode, string message)
         {
             base.OnJoinRoomFailed(returnCode, message);
+            m_enteringRoom = false;
             UpdateRoomVisual();
         }
     }

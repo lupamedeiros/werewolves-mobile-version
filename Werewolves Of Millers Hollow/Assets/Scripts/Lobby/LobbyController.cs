@@ -88,6 +88,14 @@ namespace Game.Lobby
         public override void OnJoinRoomFailed(short returnCode, string message)
         {
             base.OnJoinRoomFailed(returnCode, message);
+            Debug.LogError($"Falha em entrar na sala! {message}");
+            EnableSwitchCanvas();
+        }
+
+        public override void OnCreateRoomFailed(short returnCode, string message)
+        {
+            Debug.LogError($"Falha em criar sala! {message}");
+            base.OnCreateRoomFailed(returnCode, message);
             EnableSwitchCanvas();
         }
     }

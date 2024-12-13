@@ -28,6 +28,12 @@ namespace Game.Lobby
         [Header("Create room button")]
         [SerializeField] Button m_createRoomButton;
         bool m_creatingRoom;
+        List<RoomInfo> m_currentRooms;
+
+        private void Awake()
+        {
+            m_currentRooms ??= new List<RoomInfo>();
+        }
 
         public override void OnEnable()
         {
@@ -50,10 +56,23 @@ namespace Game.Lobby
 
         bool CanCreateRoom()
         {
-            if (string.IsNullOrWhiteSpace(m_roomNameInputField.text)) return false;
+            if (string.IsNullOrWhiteSpace(GetRoomName())) return false;
             if (PhotonNetwork.Server != ServerConnection.MasterServer) return false;
-            //if (!PhotonNetwork.InLobby) return false;
+            if (!PhotonNetwork.IsConnectedAndReady) return false;
+            if (PhotonNetwork.NetworkClientState == ClientState.Authenticating) return false;
+            if (PhotonNetwork.NetworkClientState == ClientState.ConnectingToGameServer) return false;
+            if (PhotonNetwork.NetworkClientState == ClientState.JoiningLobby) return false;
+            if (PhotonNetwork.NetworkClientState == ClientState.Joining) return false;
+            if (PhotonNetwork.NetworkClientState == ClientState.Disconnecting) return false;
+            if (m_currentRooms.Exists(x => x.Name == GetRoomName())) return false;
+            if (m_creatingRoom) return false;
             return true;
+        }
+
+        public override void OnRoomListUpdate(List<RoomInfo> roomList)
+        {
+            base.OnRoomListUpdate(roomList);
+            m_currentRooms = roomList;
         }
 
         void ResetCreator()
@@ -101,16 +120,16 @@ namespace Game.Lobby
 
         public void CreateRoom()
         {
-            if (m_creatingRoom) return;
-            string roomName = m_roomNameInputField.text;
-            if (string.IsNullOrWhiteSpace(roomName)) return;
+            if (!CanCreateRoom()) return;
             Debug.Log("Criando sala!");
             MultiplayerObserver.EnteringRoom();
             m_creatingRoom = true;
             RoomOptions roomOptions = new RoomOptions();
             roomOptions.MaxPlayers = m_currentMaxPlayerCount;
-            PhotonNetwork.CreateRoom(roomName, roomOptions);
+            PhotonNetwork.CreateRoom(GetRoomName(), roomOptions);
         }
+
+        public string GetRoomName() => m_roomNameInputField.text;
 
         public override void OnCreatedRoom()
         {
