@@ -3258,8 +3258,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_roomItemPrefab: {fileID: 344431261255450218, guid: 15f1a2c2872b35c499c73b447ef5603a, type: 3}
   m_yButtonSize: 180
+  m_roomCodeInputField: {fileID: 872960083}
   m_contentObject: {fileID: 560962619}
   m_refreshButton: {fileID: 1568197253}
+  m_enterRoomByCodeButton: {fileID: 1717110027}
   m_secondsToRefresh: 2
 --- !u!1 &1324802568
 GameObject:
@@ -5593,7 +5595,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Insira o c\xF3digo da sala"
+  m_Text: Insira o nome da sala
 --- !u!222 &1901976109
 CanvasRenderer:
   m_ObjectHideFlags: 0

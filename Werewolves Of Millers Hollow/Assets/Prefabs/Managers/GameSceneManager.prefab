@@ -45,6 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_DDOL: 1
-  m_menuSceneIndex: 0
-  m_lobbySceneIndex: 1
-  m_gameHubIndex: 2
+  m_menuSceneIndex: 1
+  m_lobbySceneIndex: 2
+  m_gameHubIndex: 3
