@@ -1,3 +1,4 @@
+using Game.Multiplayer;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
@@ -124,9 +125,25 @@ namespace Game.Lobby
             Debug.Log("Criando sala!");
             MultiplayerObserver.EnteringRoom();
             m_creatingRoom = true;
-            RoomOptions roomOptions = new RoomOptions();
-            roomOptions.MaxPlayers = m_currentMaxPlayerCount;
-            PhotonNetwork.CreateRoom(GetRoomName(), roomOptions);
+            PhotonNetwork.CreateRoom(GetRoomName(), GetNewRoomOptions());
+        }
+
+        RoomOptions GetNewRoomOptions()
+        {
+            RoomOptions roomOptions = new RoomOptions()
+            {
+                IsOpen = true,
+                IsVisible = true,
+                MaxPlayers = m_currentMaxPlayerCount
+            };
+
+            ExitGames.Client.Photon.Hashtable customRoomProps = new ExitGames.Client.Photon.Hashtable()
+            {
+                { PropertiesHandler.PROP_ROOM_MINPLAYERCOUNT, m_currentMinPlayerCount }
+            };
+            
+            roomOptions.CustomRoomProperties = customRoomProps;
+            return roomOptions;
         }
 
         public string GetRoomName() => m_roomNameInputField.text;

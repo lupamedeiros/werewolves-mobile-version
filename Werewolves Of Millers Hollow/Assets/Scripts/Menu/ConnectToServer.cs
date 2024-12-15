@@ -14,6 +14,7 @@ namespace Game.Multiplayer
                 FailedToConnectToLobby("Não é possível conectar sem um nome!");
                 return;
             }
+            PhotonNetwork.AutomaticallySyncScene = true;
             PhotonNetwork.NickName = nickname;
             PhotonNetwork.ConnectUsingSettings();
             MultiplayerObserver.TryConnectToLobby();
