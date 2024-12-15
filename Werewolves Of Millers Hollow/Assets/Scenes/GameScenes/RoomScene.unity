@@ -548,7 +548,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Content: {fileID: 1609869001}
-  m_Horizontal: 1
+  m_Horizontal: 0
   m_Vertical: 1
   m_MovementType: 1
   m_Elasticity: 0.1
@@ -613,6 +613,7 @@ GameObject:
   m_Component:
   - component: {fileID: 543930620}
   - component: {fileID: 543930621}
+  - component: {fileID: 543930622}
   m_Layer: 0
   m_Name: HubController
   m_TagString: Untagged
@@ -652,6 +653,19 @@ MonoBehaviour:
   m_textHeight: 80
   m_topPadding: 30
   m_spacing: 10
+--- !u!114 &543930622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 543930619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9061cf09af985a74cba85a8cd7df0c76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_startButton: {fileID: 1656712703}
 --- !u!1 &572123186
 GameObject:
   m_ObjectHideFlags: 0

@@ -47,4 +47,5 @@ MonoBehaviour:
   m_DDOL: 1
   m_menuSceneIndex: 1
   m_lobbySceneIndex: 2
-  m_gameHubIndex: 3
+  m_gameHubSceneIndex: 3
+  m_gameSceneIndex: 4
