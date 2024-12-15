@@ -23,4 +23,18 @@ namespace Game
 
 
     }
+
+    public static class GameSystemObserver
+    {
+        public static event System.Action OnDayStart = null;
+        public static event System.Action OnDayEnd = null;
+
+        public static event System.Action OnNightStart = null;
+        public static event System.Action OnNightEnd = null;
+
+        public static void StartDay() => OnDayStart?.Invoke();
+        public static void EndDay() => OnDayEnd?.Invoke();
+        public static void StartNight() => OnNightStart?.Invoke();
+        public static void EndNight() => OnNightEnd?.Invoke();
+    }
 }
