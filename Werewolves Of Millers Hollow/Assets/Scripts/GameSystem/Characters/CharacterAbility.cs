@@ -8,4 +8,11 @@ namespace Game.Character
     {
         public abstract void UseAbility(object data);
     }
+
+    public enum CharacterState
+    {
+        None,
+        Alive,
+        Dead
+    }
 }
