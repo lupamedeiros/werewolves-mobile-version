@@ -3,22 +3,22 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Game.Character
 {
     public class Division : MonoBehaviour
     {
-        Photon.Realtime.Player m_mySelf;
         [SerializeField, Range(0, 100)] float m_werewolfPercentage = 20f;
         [SerializeField] CharacterAbility m_currentAbility;
         [SerializeField] CharacterAbility m_humanAbility;
         [SerializeField] CharacterAbility m_werewolfAbility;
-        Dictionary<Photon.Realtime.Player, CharacterAbility> m_playerWithAbility;
+        public Dictionary<Photon.Realtime.Player, CharacterAbility> m_playerWithAbility { get; private set; }
 
         private void Start()
         {
+            (m_playerWithAbility ??= new())?.Clear();
+            PhotonNetwork.AutomaticallySyncScene = false;
             HandleClient();
         }
         
@@ -44,7 +44,7 @@ namespace Game.Character
 
         void DividePlayers()
         {
-            (m_playerWithAbility ??= new())?.Clear();
+           
             Dictionary<int, Photon.Realtime.Player> playersToDivide = new(PhotonNetwork.CurrentRoom.Players);
             int werewolvesCount = GetCountOfWerewolves();
 
@@ -59,8 +59,7 @@ namespace Game.Character
                 m_playerWithAbility.Add(photonPlayer, ability);
                 playersToDivide.Remove(randomPhotonPlayerKey);
 
-                Debug.Log($"{player.Value.NickName} definido!\n" +
-                    $"Habilidade: {PropertiesHandler.GetPlayerPropertyValue<string>(player.Value, PropertiesHandler.PROP_PLAYER_ABILITY)}");
+                Debug.Log($"{player.Value.NickName} definido!\nHabilidade: {PropertiesHandler.GetPlayerPropertyValue<string>(player.Value, PropertiesHandler.PROP_PLAYER_ABILITY)}");
             }
 
             CharacterAbility GetNewPlayerAbility()
@@ -93,6 +92,11 @@ namespace Game.Character
             while (!PropertiesHandler.PlayersPropsSet())
             {
                 yield return null;
+            }
+
+            foreach (KeyValuePair<int, Photon.Realtime.Player> player in PhotonNetwork.CurrentRoom.Players)
+            {
+
             }
 
             Debug.Log($"Minha habilidade é: {PropertiesHandler.GetPlayerPropertyValue<string>(PhotonNetwork.LocalPlayer, PropertiesHandler.PROP_PLAYER_ABILITY)}");

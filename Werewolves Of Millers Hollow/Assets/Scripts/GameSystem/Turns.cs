@@ -1,13 +1,19 @@
 using static Game.Turn.DayLogic;
 using UnityEngine;
+using Game.Multiplayer;
 
 namespace Game.Turn
 {
     [System.Serializable]
     public class DayLogic : ITurnLogic
     {
-        [SerializeField, Min(0)] float m_dayDurationSec = 90;
-        float m_endDayTime;
+        [field: SerializeField, Min(0)] public float m_dayDurationSec { get; private set; } = 90;
+        float m_endDayTime
+        {
+            get => PropertiesHandler.GetRoomPropertyValue<float>(PropertiesHandler.PROP_ROOM_SHIFTTIME);
+            set => PropertiesHandler.SetRoomPropertyValue(PropertiesHandler.PROP_ROOM_SHIFTTIME, value);
+        }
+
 
         public void StartTurn()
         {
@@ -33,8 +39,12 @@ namespace Game.Turn
     [System.Serializable]
     public class NightLogic : ITurnLogic
     {
-        [SerializeField, Min(0)] float m_nightDurationSec = 90;
-        float m_endNightTime;
+        [field: SerializeField, Min(0)] public float m_nightDurationSec { get; private set; } = 90;
+        float m_endNightTime
+        {
+            get => PropertiesHandler.GetRoomPropertyValue<float>(PropertiesHandler.PROP_ROOM_SHIFTTIME);
+            set => PropertiesHandler.SetRoomPropertyValue(PropertiesHandler.PROP_ROOM_SHIFTTIME, value);
+        }
 
         public void StartTurn()
         {

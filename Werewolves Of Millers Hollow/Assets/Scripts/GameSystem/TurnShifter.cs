@@ -3,23 +3,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Game.Multiplayer;
 
 namespace Game.Turn
 {
     public class TurnShifter : MonoBehaviour
     {
         [SerializeField] Turn m_startTurn = Turn.Night;
-        [SerializeField] DayLogic m_daySettings = new();
-        [SerializeField] NightLogic m_nightSettings = new();
+        [field: SerializeField] public DayLogic m_daySettings { get; private set; } = new();
+        [field: SerializeField] public NightLogic m_nightSettings { get; private set; } = new();
         Dictionary<Turn, ITurnLogic> m_logicByEnum;
-        ITurnLogic m_currentTurnLogic;
-        public Turn CurrentTurn
+
+        public Turn CurrentTurn => PropertiesHandler.GetRoomPropertyValue<Turn>(PropertiesHandler.PROP_ROOM_SHIFT);
+
+        ITurnLogic GetTurnLogic()
         {
-            get
-            {
-                if (!m_logicByEnum.ContainsValue(m_currentTurnLogic)) return Turn.None;
-                return m_logicByEnum.FirstOrDefault(x => x.Value == m_currentTurnLogic).Key;
-            }
+            Turn currentTurn = PropertiesHandler.GetRoomPropertyValue<Turn>(PropertiesHandler.PROP_ROOM_SHIFT);
+            return m_logicByEnum[currentTurn];
+        }
+
+        void SetTurnLogic(Turn newTurn)
+        {
+            PropertiesHandler.SetRoomPropertyValue(PropertiesHandler.PROP_ROOM_SHIFT, newTurn);
         }
 
         private void OnEnable()
@@ -41,23 +46,27 @@ namespace Game.Turn
 
         private void Update()
         {
+            UpdateTurn();
+        }
+
+        void UpdateTurn()
+        {
             Debug.Log($"O turno atual é: {CurrentTurn}");
-            m_currentTurnLogic?.UpdateTurn();
+            if (!PhotonNetwork.IsMasterClient) return;
+            GetTurnLogic()?.UpdateTurn();
         }
 
         void SwitchTurn(Turn newTurn)
         {
-            m_currentTurnLogic?.EndTurn();
+            if (!PhotonNetwork.IsMasterClient) return;
+            GetTurnLogic()?.EndTurn();
+            
             Debug.Log($"Turno {CurrentTurn} terminou!");
-            if (m_logicByEnum.TryGetValue(newTurn, out ITurnLogic newLogic))
-            {
-                m_currentTurnLogic = newLogic;
-                m_currentTurnLogic.StartTurn();
-            }
-            else
-            {
-                m_currentTurnLogic = null;
-            }
+            
+            SetTurnLogic(newTurn);
+
+            GetTurnLogic().StartTurn();
+
             Debug.Log($"Turno {CurrentTurn} começou!");
         }
 
@@ -65,17 +74,17 @@ namespace Game.Turn
         {
             m_logicByEnum = new Dictionary<Turn, ITurnLogic>()
             {
-                { Turn.Day, m_daySettings},
-                { Turn.Night, m_nightSettings}
+                { Turn.None, null },
+                { Turn.Day, m_daySettings },
+                { Turn.Night, m_nightSettings }
             };
         }
         void SetupTurn()
         {
             SetDictionary();
+            if (!PhotonNetwork.IsMasterClient) return;
             SwitchTurn(m_startTurn);
         }
-
-
         public void SwitchToDay() => SwitchTurn(Turn.Day);
         public void SwitchToNight() => SwitchTurn(Turn.Night);
     }    

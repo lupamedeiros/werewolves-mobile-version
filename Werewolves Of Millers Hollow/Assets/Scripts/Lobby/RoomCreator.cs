@@ -134,14 +134,17 @@ namespace Game.Lobby
             {
                 IsOpen = true,
                 IsVisible = true,
-                MaxPlayers = m_currentMaxPlayerCount
-            };
-
-            ExitGames.Client.Photon.Hashtable customRoomProps = new ExitGames.Client.Photon.Hashtable()
-            {
-                { PropertiesHandler.PROP_ROOM_MINPLAYERCOUNT, m_currentMinPlayerCount }
+                MaxPlayers = m_currentMaxPlayerCount,
+                BroadcastPropsChangeToAll = true
             };
             
+            ExitGames.Client.Photon.Hashtable customRoomProps = new ExitGames.Client.Photon.Hashtable()
+            {
+                { PropertiesHandler.PROP_ROOM_MINPLAYERCOUNT, m_currentMinPlayerCount },
+                { PropertiesHandler.PROP_ROOM_SHIFT, Turn.Turn.None },
+                { PropertiesHandler.PROP_ROOM_SHIFTTIME, 0}
+            };
+
             roomOptions.CustomRoomProperties = customRoomProps;
             return roomOptions;
         }
