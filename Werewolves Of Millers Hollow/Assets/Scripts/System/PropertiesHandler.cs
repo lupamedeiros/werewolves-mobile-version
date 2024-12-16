@@ -9,6 +9,10 @@ namespace Game.Multiplayer
     public static class PropertiesHandler
     {
         public const string PROP_ROOM_MINPLAYERCOUNT = "mP";
+        public const string PROP_ROOM_SHIFT = "sh";
+        public const string PROP_ROOM_SHIFTTIME = "shT";
+
+
         public const string PROP_PLAYER_STATE = "st";
         public const string PROP_PLAYER_ABILITY = "ab";
 
@@ -25,9 +29,50 @@ namespace Game.Multiplayer
             {
                 return result;
             }
+            try
+            {
+                return (T)currentRoom.CustomProperties[propName];
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogException(e);
+            }
+
             Debug.LogError($"Não é possível converter o valor da propriedade {propName} em {typeof(T)}");
             return default;
         }
+        public static void SetRoomPropertyValue(string propName, object value)
+        {
+            if (string.IsNullOrEmpty(propName)) return;
+
+            Room currentRoom = PhotonNetwork.CurrentRoom;
+            if (currentRoom == null) return;
+            if (currentRoom.CustomProperties == null || currentRoom.CustomProperties.Count <= 0) return;
+            if (!currentRoom.CustomProperties.ContainsKey(propName)) return;
+            currentRoom.CustomProperties[propName] = value;
+            currentRoom.SetCustomProperties(currentRoom.CustomProperties);
+        }
+
+        public static void AddRoomPropertyValue(string propName, object value)
+        {
+            if (string.IsNullOrEmpty(propName)) return;
+
+            Room currentRoom = PhotonNetwork.CurrentRoom;
+            if (currentRoom == null) return;
+            if (currentRoom.CustomProperties == null || currentRoom.CustomProperties.Count <= 0)
+            {
+                ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable()
+                {
+                    { propName, value }
+                };
+                currentRoom.SetCustomProperties(props);
+            }
+            else
+            {
+                currentRoom.CustomProperties.Add(propName, value);
+            }
+        }
+
         public static T GetPlayerPropertyValue<T>(Player player, string propName)
         {
             if (player == null) return default;
@@ -41,6 +86,14 @@ namespace Game.Multiplayer
             }
             Debug.LogError($"Não é possível converter o valor da propriedade {propName} em {typeof(T)}");
             return default;
+        }
+        public static void SetPlayerPropertyValue(Player player, string propName, object value)
+        {
+            if (player == null) return;
+            if (string.IsNullOrEmpty(propName)) return;
+            if (player.CustomProperties == null || player.CustomProperties.Count <= 0) return;
+            if (!player.CustomProperties.ContainsKey(propName)) return;
+            player.CustomProperties[propName] = value;
         }
 
         public static bool PlayersPropsSet()

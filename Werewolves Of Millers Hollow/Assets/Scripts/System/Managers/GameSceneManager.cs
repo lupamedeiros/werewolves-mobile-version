@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,7 +34,7 @@ namespace Game
             LoadScene(m_gameSceneIndex);
         }
 
-        void LoadScene(int index)
+        public void LoadScene(int index)
         {
             if (index < 0)
             {
