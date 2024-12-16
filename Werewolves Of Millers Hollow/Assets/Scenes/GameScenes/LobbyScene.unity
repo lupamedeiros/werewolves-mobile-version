@@ -2864,7 +2864,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1090225947}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6294365229153082119}
+        m_TargetAssemblyTypeName: ButtonSound, Assembly-CSharp
+        m_MethodName: PlaySoundLobby
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1090225947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3373,6 +3385,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1316623638}
         m_TargetAssemblyTypeName: Game.Lobby.LobbyController, Assembly-CSharp
         m_MethodName: EnableLobby
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6294365229153082119}
+        m_TargetAssemblyTypeName: ButtonSound, Assembly-CSharp
+        m_MethodName: PlaySoundLobby
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4374,6 +4398,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1316623638}
         m_TargetAssemblyTypeName: Game.Lobby.LobbyController, Assembly-CSharp
         m_MethodName: UpdateRoomList
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6294365229153082119}
+        m_TargetAssemblyTypeName: ButtonSound, Assembly-CSharp
+        m_MethodName: PlaySoundLobby
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
