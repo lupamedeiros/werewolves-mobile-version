@@ -5,16 +5,13 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-
 public class Mudanca_dia_noite : MonoBehaviour
 {
     public int tempoInicialSegundos = 10;
     public Image backgroundDia;
     public Image backgroundNoite;
-
-
+    
     private bool tempoAcabou;
-
 
     void Start()
     {
@@ -22,12 +19,8 @@ public class Mudanca_dia_noite : MonoBehaviour
         backgroundDia.gameObject.SetActive(true);
         backgroundNoite.gameObject.SetActive(false);
 
-
-
         StartCoroutine(ContagemRegressiva());
     }
-
-
 
     IEnumerator ContagemRegressiva()
     {
@@ -43,15 +36,11 @@ public class Mudanca_dia_noite : MonoBehaviour
         }
     }
 
-
-
     IEnumerator AlterarImagemPorTempo(Image imagemAtual, Image imagemProxima)
     {
-
         imagemAtual.gameObject.SetActive(false);
         imagemProxima.gameObject.SetActive(true);
 
         yield return new WaitForSeconds(tempoInicialSegundos);
     }
-
 }
