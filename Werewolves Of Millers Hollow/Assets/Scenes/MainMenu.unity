@@ -283,7 +283,7 @@ Animation:
   m_GameObject: {fileID: 373170594}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 0}
+  m_Animation: {fileID: 7400000, guid: af9f09c85b7519b418b0eb7d3b6672a9, type: 2}
   m_Animations:
   - {fileID: 7400000, guid: af9f09c85b7519b418b0eb7d3b6672a9, type: 2}
   m_WrapMode: 0
@@ -1025,6 +1025,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2124359014}
     m_Modifications:
+    - target: {fileID: 173852146927383993, guid: d64e757284449b04abc97ef1e5d14fc0, type: 3}
+      propertyPath: m_text
+      value: Iniciar Jogo
+      objectReference: {fileID: 0}
     - target: {fileID: 1448443424864558600, guid: d64e757284449b04abc97ef1e5d14fc0, type: 3}
       propertyPath: m_Name
       value: "(Button) Bot\xE3o para iniciar o jogo"
