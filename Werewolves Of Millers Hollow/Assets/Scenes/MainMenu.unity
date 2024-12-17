@@ -209,6 +209,7 @@ GameObject:
   - component: {fileID: 373170595}
   - component: {fileID: 373170597}
   - component: {fileID: 373170596}
+  - component: {fileID: 373170598}
   m_Layer: 5
   m_Name: (Image) Logo do jogo
   m_TagString: Untagged
@@ -273,6 +274,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 373170594}
   m_CullTransparentMesh: 1
+--- !u!111 &373170598
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 373170594}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations:
+  - {fileID: 7400000, guid: af9f09c85b7519b418b0eb7d3b6672a9, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1001 &500919135
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -706,7 +723,7 @@ RectTransform:
   m_GameObject: {fileID: 1136808804}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.3261691, y: 1.3261691, z: 1.3261691}
+  m_LocalScale: {x: 1.1272438, y: 1.3261691, z: 1.3261691}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2124359014}
