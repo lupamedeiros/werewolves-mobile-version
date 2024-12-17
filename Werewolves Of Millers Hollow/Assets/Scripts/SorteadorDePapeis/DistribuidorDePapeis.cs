@@ -14,20 +14,9 @@ namespace SorteadorDePapeis
             Vidente
         }
 
-        public class Jogador
+        public static List<Papel> DistribuirPapeis(int numJogadores, int numLobisomens, int numVidentes)
         {
-            public string Nome { get; set; }
-            public Papel PapelAtribuido { get; set; }
-
-            public override string ToString()
-            {
-                return $"{Nome} - {PapelAtribuido}";
-            }
-        }
-
-        public static List<Jogador> DistribuirPapeis(List<string> nomesJogadores, int numLobisomens, int numVidentes)
-        {
-            if (nomesJogadores == null || nomesJogadores.Count < numLobisomens + numVidentes)
+            if (numJogadores < numLobisomens + numVidentes)
             {
                 throw new ArgumentException("O número de jogadores deve ser maior ou igual à soma de lobisomens e videntes.");
             }
@@ -41,41 +30,32 @@ namespace SorteadorDePapeis
             papeis.AddRange(Enumerable.Repeat(Papel.Vidente, numVidentes));
 
             // Preencher os papéis restantes como aldeões
-            papeis.AddRange(Enumerable.Repeat(Papel.Aldeao, nomesJogadores.Count - papeis.Count));
+            papeis.AddRange(Enumerable.Repeat(Papel.Aldeao, numJogadores - papeis.Count));
 
             // Embaralhar os papéis aleatoriamente
-            System.Random random = new System.Random(); // Uso explícito de System.Random
+            System.Random random = new System.Random();
             papeis = papeis.OrderBy(_ => random.Next()).ToList();
 
-            // Atribuir os papéis aos jogadores
-            List<Jogador> jogadores = new List<Jogador>();
-            for (int i = 0; i < nomesJogadores.Count; i++)
-            {
-                jogadores.Add(new Jogador { Nome = nomesJogadores[i], PapelAtribuido = papeis[i] });
-            }
-
-            return jogadores;
+            return papeis;
         }
 
         public static void Main(string[] args)
         {
-            // Lista de jogadores de exemplo
-            List<string> nomesJogadores = new List<string> { "Alice", "Bob", "Charlie", "Diana", "Eve", "Frank" };
-
-            // Definir número de lobisomens e videntes
+            // Definir número de jogadores, lobisomens e videntes
+            int numJogadores = 6;
             int numLobisomens = 2;
             int numVidentes = 1;
 
-            // Distribuir papéis
             try
             {
-                List<Jogador> jogadores = DistribuirPapeis(nomesJogadores, numLobisomens, numVidentes);
+                // Distribuir papéis
+                List<Papel> papeis = DistribuirPapeis(numJogadores, numLobisomens, numVidentes);
 
                 // Exibir os papéis atribuídos
                 Console.WriteLine("Papéis Atribuídos:");
-                foreach (var jogador in jogadores)
+                for (int i = 0; i < papeis.Count; i++)
                 {
-                    Console.WriteLine(jogador);
+                    Console.WriteLine($"Jogador {i + 1}: {papeis[i]}");
                 }
             }
             catch (Exception ex)
@@ -85,5 +65,3 @@ namespace SorteadorDePapeis
         }
     }
 }
-
-
