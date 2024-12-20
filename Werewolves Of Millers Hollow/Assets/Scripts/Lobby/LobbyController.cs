@@ -3,6 +3,7 @@ using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Game.Lobby
 {
@@ -97,6 +98,12 @@ namespace Game.Lobby
             Debug.LogError($"Falha em criar sala! {message}");
             base.OnCreateRoomFailed(returnCode, message);
             EnableSwitchCanvas();
+        }
+        
+        public void ExitToMainMenu()
+        {
+            Debug.Log("Saindo do lobby e carregando o Menu...");
+            SceneManager.LoadScene(1); 
         }
     }
 }
