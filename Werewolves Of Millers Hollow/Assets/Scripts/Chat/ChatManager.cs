@@ -1,0 +1,40 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
+using TMPro;
+using UnityEngine.UI;
+public class ChatManager : MonoBehaviourPunCallbacks
+{
+    [Header("UI Elements")]
+    public TMP_InputField chatInputField; 
+    public TextMeshProUGUI chatDisplay;        
+
+    void Start()
+    {
+        if (!PhotonNetwork.IsConnected)
+        {
+            Debug.LogError("Você precisa estar conectado ao Photon para usar o chat.");
+            return;
+        }
+    }
+
+    public void OnSendMessage()
+    {
+        string message = chatInputField.text;
+        if (!string.IsNullOrEmpty(message))
+        {
+            // Usa o PhotonView associado ao GameObject para enviar a mensagem
+            photonView.RPC("BroadcastMessage", RpcTarget.All, PhotonNetwork.NickName, message);
+            chatInputField.text = ""; // Limpa o campo de entrada
+        }
+    }
+
+
+    [PunRPC]
+    void BroadcastMessage(string sender, string message)
+    {
+        chatDisplay.text += $"\n<b>{sender}:</b> {message}";
+    }
+}
