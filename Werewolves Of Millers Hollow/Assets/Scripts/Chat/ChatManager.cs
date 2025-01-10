@@ -7,6 +7,7 @@ using TMPro;
 using UnityEngine.UI;
 public class ChatManager : MonoBehaviourPunCallbacks
 {
+    public PhotonView photonView;
     [Header("UI Elements")]
     public TMP_InputField chatInputField; 
     public TextMeshProUGUI chatDisplay;        
@@ -25,9 +26,8 @@ public class ChatManager : MonoBehaviourPunCallbacks
         string message = chatInputField.text;
         if (!string.IsNullOrEmpty(message))
         {
-            // Usa o PhotonView associado ao GameObject para enviar a mensagem
             photonView.RPC("BroadcastMessage", RpcTarget.All, PhotonNetwork.NickName, message);
-            chatInputField.text = ""; // Limpa o campo de entrada
+            chatInputField.text = "";
         }
     }
 

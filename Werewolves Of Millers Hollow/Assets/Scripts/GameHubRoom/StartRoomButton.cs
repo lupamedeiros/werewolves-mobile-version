@@ -24,9 +24,9 @@ namespace Game.GameRoom
         void StartRoom()
         {
             if (!CanStartRoom()) return;
-            GameSceneManager.Instance.LoadGameScene();
+            //GameSceneManager.Instance.LoadGameScene();
+            GameSceneManager.Instance.LoadScene(5);
         }
-
         bool CanStartRoom()
         {
             if (!PhotonNetwork.IsMasterClient) return false;

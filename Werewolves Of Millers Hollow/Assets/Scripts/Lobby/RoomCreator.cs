@@ -53,6 +53,19 @@ namespace Game.Lobby
         private void Update()
         {
             m_createRoomButton.gameObject.SetActive(CanCreateRoom());
+#if UNITY_EDITOR
+            if (Input.GetKeyDown(KeyCode.KeypadMinus))
+            {
+                m_currentMinPlayerCount--;
+                UpdatePlayerCountIndicator();
+            }
+
+            if (Input.GetKeyDown(KeyCode.KeypadPlus))
+            {
+                m_currentMinPlayerCount++;
+                UpdatePlayerCountIndicator();
+            }
+#endif
         }
 
         bool CanCreateRoom()
@@ -168,5 +181,6 @@ namespace Game.Lobby
             base.OnJoinRoomFailed(returnCode, message);
             m_creatingRoom = false;
         }
+        
     }
 }
