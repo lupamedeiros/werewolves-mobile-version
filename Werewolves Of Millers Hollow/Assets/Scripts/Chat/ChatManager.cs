@@ -5,6 +5,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ChatManager : MonoBehaviourPunCallbacks
 {
@@ -42,6 +43,11 @@ public class ChatManager : MonoBehaviourPunCallbacks
         
         LayoutRebuilder.ForceRebuildLayoutImmediate(chatDisplay.rectTransform);
         ScrollToBottom();
+    }
+    
+    public void CloseChat()
+    {
+        SceneManager.LoadScene(4);
     }
 
     void ScrollToBottom()
