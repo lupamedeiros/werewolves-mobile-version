@@ -12,8 +12,7 @@ public class ChatManager : MonoBehaviourPunCallbacks
     [Header("UI Elements")]
     public TMP_InputField chatInputField; 
     public TextMeshProUGUI chatDisplay;      
-    [SerializeField] private ScrollRect scrollRect;
-    private bool isUserScrolling;
+    public ScrollRect scrollRect;
     void Start()
     {
         if (!PhotonNetwork.IsConnected)
@@ -23,17 +22,7 @@ public class ChatManager : MonoBehaviourPunCallbacks
         }
     }
     
-    void Update()
-    {
-        if (Input.GetMouseButton(0)) 
-        {
-            isUserScrolling = true;
-        }
-        else
-        {
-            isUserScrolling = false;
-        }
-    }
+    
 
     public void OnSendMessage()
     {
@@ -50,12 +39,19 @@ public class ChatManager : MonoBehaviourPunCallbacks
     void BroadcastMessage(string sender, string message)
     {
         chatDisplay.text += $"\n<b>{sender}:</b> {message}";
-        LayoutRebuilder.ForceRebuildLayoutImmediate(chatDisplay.rectTransform);
         
-        Canvas.ForceUpdateCanvases(); 
-        if (!isUserScrolling)
-        {
-            scrollRect.verticalNormalizedPosition = 0; 
-        }
+        LayoutRebuilder.ForceRebuildLayoutImmediate(chatDisplay.rectTransform);
+        ScrollToBottom();
+    }
+
+    void ScrollToBottom()
+    {
+        StartCoroutine(ScrollToBottomNextFrame());
+    }
+
+    private IEnumerator ScrollToBottomNextFrame()
+    {
+        yield return null; 
+        scrollRect.verticalNormalizedPosition = 0; 
     }
 }
