@@ -11,7 +11,7 @@ namespace Game.Multiplayer
         {
             if (string.IsNullOrWhiteSpace(nickname))
             {
-                FailedToConnectToLobby("Não é possível conectar sem um nome!");
+                FailedToConnectToLobby("Nï¿½o ï¿½ possï¿½vel conectar sem um nome!");
                 return;
             }
             PhotonNetwork.AutomaticallySyncScene = true;
