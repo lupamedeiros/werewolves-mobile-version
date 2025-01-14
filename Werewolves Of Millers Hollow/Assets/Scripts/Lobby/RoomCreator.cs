@@ -53,6 +53,20 @@ namespace Game.Lobby
         private void Update()
         {
             m_createRoomButton.gameObject.SetActive(CanCreateRoom());
+
+#if UNITY_EDITOR
+            if (Input.GetKeyDown(KeyCode.KeypadMinus))
+            {
+                m_currentMinPlayerCount--;
+                UpdatePlayerCountIndicator();
+            }
+
+            if (Input.GetKeyDown(KeyCode.KeypadPlus))
+            {
+                m_currentMinPlayerCount++;
+                UpdatePlayerCountIndicator();
+            }
+#endif
         }
 
         bool CanCreateRoom()
@@ -142,7 +156,8 @@ namespace Game.Lobby
             {
                 { PropertiesHandler.PROP_ROOM_MINPLAYERCOUNT, m_currentMinPlayerCount },
                 { PropertiesHandler.PROP_ROOM_SHIFT, Turn.Turn.None },
-                { PropertiesHandler.PROP_ROOM_SHIFTTIME, 0}
+                { PropertiesHandler.PROP_ROOM_SHIFTTIME, 0},
+                { PropertiesHandler.PROP_ROOM_SHIFTDURATION, 0}
             };
 
             roomOptions.CustomRoomProperties = customRoomProps;

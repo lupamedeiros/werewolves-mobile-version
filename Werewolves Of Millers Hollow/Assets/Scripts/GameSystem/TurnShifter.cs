@@ -14,17 +14,19 @@ namespace Game.Turn
         [field: SerializeField] public NightLogic m_nightSettings { get; private set; } = new();
         Dictionary<Turn, ITurnLogic> m_logicByEnum;
 
-        public Turn CurrentTurn => PropertiesHandler.GetRoomPropertyValue<Turn>(PropertiesHandler.PROP_ROOM_SHIFT);
+        Turn m_currentTurn = Turn.None;
+        //{
+        //    get => PropertiesHandler.GetRoomPropertyValue<Turn>(PropertiesHandler.PROP_ROOM_SHIFT);
+        //    private set => PropertiesHandler.SetRoomPropertyValue(PropertiesHandler.PROP_ROOM_SHIFT, value);
+        //}
 
-        ITurnLogic GetTurnLogic()
-        {
-            Turn currentTurn = PropertiesHandler.GetRoomPropertyValue<Turn>(PropertiesHandler.PROP_ROOM_SHIFT);
-            return m_logicByEnum[currentTurn];
-        }
+        ITurnLogic GetTurnLogic() => m_logicByEnum[m_currentTurn];
 
         void SetTurnLogic(Turn newTurn)
         {
-            PropertiesHandler.SetRoomPropertyValue(PropertiesHandler.PROP_ROOM_SHIFT, newTurn);
+            m_currentTurn = newTurn;
+            PropertiesHandler.SetRoomPropertyValue(PropertiesHandler.PROP_ROOM_SHIFT, m_currentTurn);
+            PhotonNetwork.CurrentRoom.SetCustomProperties(PhotonNetwork.CurrentRoom.CustomProperties);
         }
 
         private void OnEnable()
@@ -51,7 +53,8 @@ namespace Game.Turn
 
         void UpdateTurn()
         {
-            Debug.Log($"O turno atual é: {CurrentTurn}");
+            //Debug.Log($"O turno atual é: {m_currentTurn}");
+            Debug.Log($"O turno atual é: {PropertiesHandler.GetRoomPropertyValue<Turn>(PropertiesHandler.PROP_ROOM_SHIFT)}");
             if (!PhotonNetwork.IsMasterClient) return;
             GetTurnLogic()?.UpdateTurn();
         }
@@ -61,13 +64,13 @@ namespace Game.Turn
             if (!PhotonNetwork.IsMasterClient) return;
             GetTurnLogic()?.EndTurn();
             
-            Debug.Log($"Turno {CurrentTurn} terminou!");
+            Debug.Log($"Turno {m_currentTurn} terminou!");
             
             SetTurnLogic(newTurn);
 
             GetTurnLogic().StartTurn();
 
-            Debug.Log($"Turno {CurrentTurn} começou!");
+            Debug.Log($"Turno {m_currentTurn} começou!");
         }
 
         void SetDictionary()

@@ -10,12 +10,25 @@ namespace Game.Multiplayer
     {
         public const string PROP_ROOM_MINPLAYERCOUNT = "mP";
         public const string PROP_ROOM_SHIFT = "sh";
+
         public const string PROP_ROOM_SHIFTTIME = "shT";
+        public const string PROP_ROOM_SHIFTDURATION = "shD";
+
 
 
         public const string PROP_PLAYER_STATE = "st";
         public const string PROP_PLAYER_ABILITY = "ab";
 
+        public static object GetRoomPropertyValue(string propName)
+        {
+            if (string.IsNullOrEmpty(propName)) return default;
+
+            Room currentRoom = PhotonNetwork.CurrentRoom;
+            if (currentRoom == null) return default;
+            if (currentRoom.CustomProperties == null || currentRoom.CustomProperties.Count <= 0) return default;
+            if (!currentRoom.CustomProperties.ContainsKey(propName)) return default;
+            return currentRoom.CustomProperties[propName];
+        }
         public static T GetRoomPropertyValue<T>(string propName)
         {
             if (string.IsNullOrEmpty(propName)) return default;
@@ -52,7 +65,6 @@ namespace Game.Multiplayer
             currentRoom.CustomProperties[propName] = value;
             currentRoom.SetCustomProperties(currentRoom.CustomProperties);
         }
-
         public static void AddRoomPropertyValue(string propName, object value)
         {
             if (string.IsNullOrEmpty(propName)) return;
@@ -73,6 +85,15 @@ namespace Game.Multiplayer
             }
         }
 
+
+        public static object GetPlayerPropertyValue(Player player, string propName)
+        {
+            if (player == null) return default;
+            if (string.IsNullOrEmpty(propName)) return default;
+            if (player.CustomProperties == null || player.CustomProperties.Count <= 0) return default;
+            if (!player.CustomProperties.ContainsKey(propName)) return default;
+            return player.CustomProperties[propName];
+        }
         public static T GetPlayerPropertyValue<T>(Player player, string propName)
         {
             if (player == null) return default;

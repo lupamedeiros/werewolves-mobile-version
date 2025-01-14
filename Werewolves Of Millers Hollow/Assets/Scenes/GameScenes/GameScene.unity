@@ -432,6 +432,7 @@ MonoBehaviour:
   m_shiftTxt: {fileID: 1992997598}
   m_clock: {fileID: 1424148657}
   m_division: {fileID: 1085733597}
+  m_turnShifter: {fileID: 1676704900}
 --- !u!1 &1085733595
 GameObject:
   m_ObjectHideFlags: 0
@@ -788,9 +789,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_startTurn: 2
   <m_daySettings>k__BackingField:
-    <m_dayDurationSec>k__BackingField: 90
+    <m_dayDurationSec>k__BackingField: 10
   <m_nightSettings>k__BackingField:
-    <m_nightDurationSec>k__BackingField: 90
+    <m_nightDurationSec>k__BackingField: 10
 --- !u!4 &1676704901
 Transform:
   m_ObjectHideFlags: 0

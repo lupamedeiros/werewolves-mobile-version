@@ -14,17 +14,19 @@ namespace Game.GameRoom
         private void OnEnable()
         {
             m_startButton.onClick.AddListener(StartRoom);
+            PhotonNetwork.AutomaticallySyncScene = true;
         }
 
         private void OnDisable()
         {
             m_startButton.onClick.RemoveListener(StartRoom);
+            PhotonNetwork.AutomaticallySyncScene = false;
         }
 
         void StartRoom()
         {
             if (!CanStartRoom()) return;
-            GameSceneManager.Instance.LoadGameScene();
+            PhotonNetwork.LoadLevel(GameSceneManager.Instance.GameSceneIndex);
         }
 
         bool CanStartRoom()
